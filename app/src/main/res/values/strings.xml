@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">M-HIke</string>
+
+    <string name="lbl_NameOfHike">"Enter Name of hike"</string>
+    <string name="lbl_Location">"Enter Location"</string>
+    <string name="lbl_ChooseDate">"Choose Date"</string>
+    <string name="lbl_ParkingAvailable">"Parking Available"</string>
+    <string name="lbl_LengthOfTheHike">"Length of hike (km)"</string>
+    <string name="lbl_LevelOfDifficulty">"Level of difficulty"</string>
+    <string name="lbl_Description">"Description"</string>
+
+    <string name="btn_Date">Choose Date</string>
+    <string name="btn_Next">Next</string>
+    <string name="btn_Back">Back</string>
+    <string name="btn_Save">Save</string>
+
+    <string name="txt_Yes">Yes</string>
+    <string name="txt_No">No</string>
+    <string name="txtNameOfHike">Name of Hike</string>
+</resources>
