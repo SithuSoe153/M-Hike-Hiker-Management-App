@@ -90,6 +90,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         rowValues.put(Hike.DIFFICULTY, hike.getDifficulty());
         rowValues.put(Hike.DESCRIPTION, hike.getDescription());
 
+        Log.i("test", "updateHike");
+
         String where = "id=?";
         String values[] = {hike.getId() + ""};
         result =database.update(TABLE_HIKE,rowValues,where,values);

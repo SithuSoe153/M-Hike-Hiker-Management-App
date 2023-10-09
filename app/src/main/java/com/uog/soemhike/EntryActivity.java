@@ -32,10 +32,12 @@ public class EntryActivity extends AppCompatActivity {
 
     Spinner spn_Location, spn_Difficulty;
 
-    private Button btn_ShowDateTime, btn_Next;
+    private Button btn_ShowDateTime, btn_Next, btn_Back;
 
     String location, difficulty, errorRequired;
     private Integer id;
+    private Integer locationIndex = 0;
+    private Integer difficultyIndex = 0;
     private String[] spn_Location_data = {"Select a location","M1", "M2", "M3"};
     private String[] spn_Difficulty_data = {"Select a difficulty","H1", "H2", "H3"};
 
@@ -63,6 +65,7 @@ public class EntryActivity extends AppCompatActivity {
 
         btn_ShowDateTime = findViewById(R.id.btnShowDateTime);
         btn_Next = findViewById(R.id.btn_Next);
+        btn_Back = findViewById(R.id.btn_Back);
 
         spn_Location = (Spinner) findViewById(R.id.spn_Location);
         spn_Difficulty = (Spinner) findViewById(R.id.spn_Difficulty);
@@ -72,6 +75,7 @@ public class EntryActivity extends AppCompatActivity {
         ArrayAdapter<String> ad_location = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spn_Location_data);
         ad_location.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_Location.setAdapter(ad_location);
+        spn_Location.setSelection(locationIndex);
         spn_Location.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -88,6 +92,7 @@ public class EntryActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spn_Difficulty_data);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_Difficulty.setAdapter(adapter);
+        spn_Difficulty.setSelection(difficultyIndex);
         spn_Difficulty.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -115,6 +120,13 @@ public class EntryActivity extends AppCompatActivity {
                 goToNext();
             }
         });
+        btn_Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         Bundle bundle = getIntent().getExtras();
@@ -122,8 +134,32 @@ public class EntryActivity extends AppCompatActivity {
             id=bundle.getInt(Hike.ID);
             txt_NameOfHike.setText(bundle.getString(Hike.NAME));
 //            spn_Location.setText(bundle.getString(Hike.ADDRESS));
+            location = bundle.getString(Hike.LOCATION);
+            for (int i=0; i< spn_Location_data.length; i++){
+                if (location.equals(spn_Location_data[i])){
+                    locationIndex = i;
+                    spn_Location.setSelection(locationIndex);
+                    break;
+                }
+            }
+
+            difficulty = bundle.getString(Hike.DIFFICULTY);
+            for (int i=0; i< spn_Difficulty_data.length; i++){
+                if (difficulty.equals(spn_Difficulty_data[i])){
+                    difficultyIndex = i;
+                    spn_Difficulty.setSelection(difficultyIndex);
+                    break;
+                }
+            }
+
             lbl_Date.setText(bundle.getString(Hike.DATE));
-            rdo_Yes.setText(bundle.getInt(Hike.PARKING) + "");
+//            rdo_Yes.setText(bundle.getInt(Hike.PARKING) + "");
+//          Check the appropriate radio button based on the data
+            if ((bundle.getString(Hike.PARKING)).equals("Yes")) {
+                rdo_Yes.setChecked(true);
+            } else {
+                rdo_No.setChecked(true);
+            }
 //            double length = Double.parseDouble(bundle.getString(Hike.LENGTH));
             txt_LengthOfHike.setText(bundle.getDouble(Hike.LENGTH)+"");
 
@@ -133,6 +169,7 @@ public class EntryActivity extends AppCompatActivity {
             txt_Description.setText(bundle.getString(Hike.DESCRIPTION));
 
         }
+
 
 
     }
@@ -228,8 +265,10 @@ public class EntryActivity extends AppCompatActivity {
         }
 
         Log.i("test1",length);
+        Log.i("test", id + " This is ID");
 
         Intent intent = new Intent(this, HikeDetailActivity.class);
+        intent.putExtra(Hike.ID, id);
         intent.putExtra(Hike.NAME, name);
         intent.putExtra(Hike.LOCATION, location);
         intent.putExtra(Hike.DATE, date);

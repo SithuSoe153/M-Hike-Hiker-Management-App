@@ -28,6 +28,8 @@ public class HikeDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hike_detail);
 
+        Log.i("test", id + " This is new ID");
+
         lbl_Name = findViewById(R.id.txt1);
         lbl_Location = findViewById(R.id.txt2);
         lbl_Date = findViewById(R.id.txt3);
@@ -44,6 +46,8 @@ public class HikeDetailActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null){
             id=bundle.getInt(Hike.ID, 0);
+            Log.i("test", id + " This is new ID");
+
             name = bundle.getString(Hike.NAME);
             location= bundle.getString(Hike.LOCATION);
             date = bundle.getString(Hike.DATE);
@@ -80,26 +84,34 @@ public class HikeDetailActivity extends AppCompatActivity {
                 long result = 0;
                 if (id == 0){
                     result = databaseHelper.saveHike(hike);
+                    new AlertDialog.Builder(HikeDetailActivity.this)
+                            .setTitle("Success")
+                            .setMessage("Data Saved")
+                            .show();
 
                 } else {
                     result =databaseHelper.updateHike(hike);
+                    new AlertDialog.Builder(HikeDetailActivity.this)
+                            .setTitle("Success")
+                            .setMessage("Data Update")
+                            .show();
                 }
 
 
-                if (result>0){
-
-                    new AlertDialog.Builder(HikeDetailActivity.this)
-                            .setTitle("Success")
-                            .setMessage("Data Saved")
-                            .show();
-
-                }else{
-                    new AlertDialog.Builder(HikeDetailActivity.this)
-                            .setTitle("Success")
-                            .setMessage("Data Saved")
-                            .show();
-
-                }
+//                if (result>0){
+//
+//                    new AlertDialog.Builder(HikeDetailActivity.this)
+//                            .setTitle("Success")
+//                            .setMessage("Data Saved")
+//                            .show();
+//
+//                }else{
+//                    new AlertDialog.Builder(HikeDetailActivity.this)
+//                            .setTitle("Success")
+//                            .setMessage("Data Saved")
+//                            .show();
+//
+//                }
 
 //                txt_Name.setText("");
 //                txt_Address.setText("");
