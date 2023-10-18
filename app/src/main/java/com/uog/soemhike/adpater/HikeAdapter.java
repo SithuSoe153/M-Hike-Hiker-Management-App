@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -70,6 +71,7 @@ public interface ClickListener{
 
     TextView lbl_Id, lbl_Name, lbl_Location, lbl_Date, lbl_Parking, lbl_Length, lbl_difficulty, lbl_Description;
     Button btn_Remove, btn_Edit;
+    LinearLayout l_Item;
 
 
     public ViewHolder(@NonNull View itemView) {
@@ -87,6 +89,15 @@ public interface ClickListener{
         btn_Remove = itemView.findViewById(R.id.btn_Remove);
         btn_Edit = itemView.findViewById(R.id.btn_Edit);
 
+        l_Item = itemView.findViewById(R.id.l_Item);
+
+
+        l_Item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onItemClick(getAdapterPosition(),view,R.id.l_Item);
+            }
+        });
 
         btn_Remove.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -16,6 +16,7 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.uog.soemhike.activity.DatabaseListActivity;
 import com.uog.soemhike.database.DatabaseHelper;
 import com.uog.soemhike.database.Hike;
 
@@ -38,7 +39,7 @@ public class EntryActivity extends AppCompatActivity {
     private Integer id;
     private Integer locationIndex = 0;
     private Integer difficultyIndex = 0;
-    private String[] spn_Location_data = {"Select a location","M1", "M2", "M3"};
+    public static final String[] spn_Location_data = {"Select a location","M1", "M2", "M3"};
     private String[] spn_Difficulty_data = {"Select a difficulty","H1", "H2", "H3"};
 
 
@@ -123,12 +124,26 @@ public class EntryActivity extends AppCompatActivity {
         btn_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                startActivity(intent);
+
+                if (id != null){
+                    Intent intent = new Intent(getBaseContext(), DatabaseListActivity.class);
+                    startActivity(intent);
+                }else {
+                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                    startActivity(intent);
+                }
+
+                Log.i("test", id+"This is idid");
+
+
             }
         });
+        recievedData();
+    }
 
+//    Functions
 
+    private void recievedData(){
         Bundle bundle = getIntent().getExtras();
         if (bundle !=null){
             id=bundle.getInt(Hike.ID);
@@ -145,7 +160,7 @@ public class EntryActivity extends AppCompatActivity {
 
             difficulty = bundle.getString(Hike.DIFFICULTY);
             for (int i=0; i< spn_Difficulty_data.length; i++){
-                if (difficulty.equals(spn_Difficulty_data[i])){
+                if (    difficulty.equals(spn_Difficulty_data[i])){
                     difficultyIndex = i;
                     spn_Difficulty.setSelection(difficultyIndex);
                     break;
@@ -169,17 +184,11 @@ public class EntryActivity extends AppCompatActivity {
             txt_Description.setText(bundle.getString(Hike.DESCRIPTION));
 
         }
-
-
-
     }
-
-//    Functions
 
     public void setDate(LocalDate date){
         ZonedDateTime zdt = ZonedDateTime.now();
-
-        lbl_Date.setText(zdt.format(DateTimeFormatter.ofPattern("yyyy/MM/dd hh:mm")));
+        lbl_Date.setText(zdt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
     }
 
     private void goToNext(){

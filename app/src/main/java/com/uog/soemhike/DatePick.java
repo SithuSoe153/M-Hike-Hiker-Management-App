@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.uog.soemhike.activity.HikeAdvanceSearchActivity;
+
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.Locale;
@@ -35,9 +37,13 @@ public class DatePick extends DialogFragment implements DatePickerDialog.OnDateS
 
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-
-        EntryActivity entryActivity =(EntryActivity) getActivity();
-        entryActivity.setDate(LocalDate.of(year,month,day));
-
+        if (getActivity() instanceof EntryActivity) {
+            EntryActivity mainActivity = (EntryActivity) getActivity();
+            mainActivity.setDate(LocalDate.of(year, month, day));
+        }
+        else if(getActivity()instanceof HikeAdvanceSearchActivity){
+            HikeAdvanceSearchActivity searchActivity = (HikeAdvanceSearchActivity) getActivity();
+            searchActivity.setDate(LocalDate.of(year, month, day));
+        }
     }
 }

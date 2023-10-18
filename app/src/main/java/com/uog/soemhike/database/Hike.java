@@ -10,6 +10,7 @@ public class Hike {
     public static final String DIFFICULTY = "difficulty";
     public static final String DESCRIPTION = "description";
 
+//
 
     private Integer id;
     private String name;

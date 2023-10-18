@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.uog.soemhike.activity.DatabaseListActivity;
 import com.uog.soemhike.database.DatabaseHelper;
 import com.uog.soemhike.database.Hike;
 
@@ -95,6 +96,10 @@ public class HikeDetailActivity extends AppCompatActivity {
                             .setTitle("Success")
                             .setMessage("Data Update")
                             .show();
+
+                    Intent intent = new Intent(getBaseContext(), DatabaseListActivity.class);
+                    startActivity(intent);
+
                 }
 
 
