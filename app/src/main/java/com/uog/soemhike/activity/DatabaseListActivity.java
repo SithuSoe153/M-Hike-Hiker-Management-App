@@ -23,6 +23,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.uog.soemhike.AddObservationActivity;
 import com.uog.soemhike.EntryActivity;
 import com.uog.soemhike.HikeDetailActivity;
+import com.uog.soemhike.ObservationListActivity;
 import com.uog.soemhike.R;
 import com.uog.soemhike.adpater.HikeAdapter;
 import com.uog.soemhike.database.DatabaseHelper;
@@ -62,7 +63,7 @@ public class DatabaseListActivity extends AppCompatActivity {
                     gotoEntry(hike);
                 } else if (id==R.id.l_Item) {
                     Log.i("key", String.valueOf(hike.getId()));
-                    Intent intent = new Intent(getBaseContext(), AddObservationActivity.class);
+                    Intent intent = new Intent(getBaseContext(), ObservationListActivity.class);
                     intent.putExtra("user_id", hike.getId());
                     startActivity(intent);
                 } else if (id == R.id.btn_Remove) {

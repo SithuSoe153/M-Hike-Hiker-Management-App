@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +33,7 @@ public class AddObservationActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         hike_Id = bundle.getInt("user_id");
 
+        Log.i("key1", String.valueOf(hike_Id));
         btn_SaveQualification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

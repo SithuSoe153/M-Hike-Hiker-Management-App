@@ -48,16 +48,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "CREATE TABLE IF NOT EXISTS %s (" +
                     " %s INTEGER PRIMARY KEY AUTOINCREMENT," +
                     " %s TEXT," +
+                    " %s TEXT," +
                     " %s integer,"+
                     " FOREIGN KEY (%s)"+
                     " REFERENCES %s(%s)" +
                     " ON DELETE CASCADE" +
                     ")"
-            , TABLE_OBSERVATION, Observation.O_ID, Observation.O_TITLE, Observation.O_HIKEID, Observation.O_HIKEID, TABLE_HIKE, Hike.ID);
+            , TABLE_OBSERVATION, Observation.O_ID, Observation.O_TITLE,Observation.O_YEAR, Observation.O_HIKEID, Observation.O_HIKEID, TABLE_HIKE, Hike.ID);
 
 
     public DatabaseHelper(Context context){
-        super(context, DATABASE_NAME, null, 2);
+        super(context, DATABASE_NAME, null, 3);
         database =getWritableDatabase();
         if(database !=null) database.execSQL( "PRAGMA encoding ='UTF-8'" );
     }
@@ -110,6 +111,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long result =0;
         ContentValues rowValues =new ContentValues();
         rowValues.put(Observation.O_TITLE, observation.getTitle());
+        rowValues.put(Observation.O_YEAR, observation.getYear());
         rowValues.put(Observation.O_HIKEID, observation.getUser_id());
 
         result =database.insertOrThrow(TABLE_OBSERVATION, null, rowValues);
@@ -142,8 +144,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long result =0;
         ContentValues rowValues =new ContentValues();
         rowValues.put(Observation.O_TITLE, observation.getTitle());
+        rowValues.put(Observation.O_YEAR, observation.getYear());
         rowValues.put(Observation.O_HIKEID, observation.getUser_id());
-        rowValues.put(Hike.DATE, hike.getDate());
+//        rowValues.put(Hike.DATE, hike.getDate());
 
         Log.i("test", "updateObservation");
 
@@ -258,7 +261,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             observation = new Observation(
                     cursor.getInt(0),
                     cursor.getString(1),
-                    cursor.getInt(2)
+                    cursor.getString(2),
+                    cursor.getInt(3)
 
             );
             results.add(observation);
@@ -268,7 +272,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return results;
     }
 
-
+    public void deleteAllData(){
+        database.delete(TABLE_HIKE,null,null);
+    }
 
     public void deleteDatabase(Context context) {
         context.deleteDatabase("mHikessssss.db");
