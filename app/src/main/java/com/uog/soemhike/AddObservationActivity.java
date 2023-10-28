@@ -1,7 +1,9 @@
 package com.uog.soemhike;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +28,7 @@ public class AddObservationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_observation);
 
         txt_title = findViewById(R.id.txt_Title);
+
         btn_SaveQualification = findViewById(R.id.btn_SaveQualification);
 
         databaseHelper = new DatabaseHelper(this);
@@ -33,7 +36,7 @@ public class AddObservationActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         hike_Id = bundle.getInt("user_id");
 
-        Log.i("key1", String.valueOf(hike_Id));
+        Log.i("key111", String.valueOf(hike_Id));
         btn_SaveQualification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,11 +47,23 @@ public class AddObservationActivity extends AppCompatActivity {
 
     private void saveQualification() {
         String qTitle = txt_title.getText().toString();
+        String qYear = "2023";
 
-        Observation observation = new Observation(qTitle, hike_Id);
+        Observation observation = new Observation(qTitle,qYear , hike_Id);
 
         long qid = databaseHelper.addObservation(observation);
 
-        Toast.makeText(this,"saved" + hike_Id, Toast.LENGTH_LONG).show();
+        new AlertDialog.Builder(this)
+                .setTitle("Success")
+                .setMessage("Data Saved")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // User clicked OK button, navigate to the new activity
+                        Intent intent = new Intent(getBaseContext(), ObservationListActivity.class);
+                        intent.putExtra("user_id", hike_Id);
+                        startActivity(intent);
+                    }
+                })
+                .show();
     }
 }

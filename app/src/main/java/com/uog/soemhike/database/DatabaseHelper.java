@@ -166,13 +166,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public long delete_Observation(int id){
-        long result = 0;
-        String where = "id = ?";
-        String valuse[] = {String.valueOf(id)};
-        result  = database.delete(TABLE_OBSERVATION,where,valuse);
-        return  result;
+//    public long delete_Observation(int id){
+//        long result = 0;
+//        String where = "id = ?";
+//        String valuse[] = {String.valueOf(id)};
+//        result  = database.delete(TABLE_OBSERVATION,where,valuse);
+//        return  result;
+//
+//    }
 
+    public void delete_Observation(int id){
+
+        database.delete(TABLE_OBSERVATION, Observation.O_ID + "=?", new String[]{String.valueOf(id)});
+        Log.i("test111", String.valueOf(id));
     }
 
     public List search(String keyword ) throws Exception{

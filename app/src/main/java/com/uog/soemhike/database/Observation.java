@@ -15,7 +15,7 @@ public class Observation {
     private String year;
     private int user_id;
 
-    public Observation(String title, int user_id) {
+    public Observation(String title,String year, int user_id) {
         this.title = title;
         this.year = year;
         this.user_id = user_id;
