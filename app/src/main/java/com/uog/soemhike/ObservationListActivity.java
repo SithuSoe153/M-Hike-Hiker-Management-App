@@ -30,9 +30,9 @@ public class ObservationListActivity extends AppCompatActivity {
     private ObservationAdapter observationAdapter;
     private List<Observation> observationList=new ArrayList<>();
     private DatabaseHelper databaseHelper;
+    RecyclerView rec_ObservationList;
     TextView txt_NoRecord;
     Button btn_AddNewObservation;
-    RecyclerView rec_ObservationList;
     public int hike_Id;
 
     @Override
@@ -48,11 +48,7 @@ public class ObservationListActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         hike_Id = bundle.getInt("user_id");
 
-//        Log.i("key11", hike_Id);
-
-//        txt_Otitle.setText(hike_Id);
-
-
+//       New
 
 
         btn_AddNewObservation.setOnClickListener(new View.OnClickListener() {
@@ -84,25 +80,6 @@ public class ObservationListActivity extends AppCompatActivity {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-
-//        List<Observation> o_arrayList = null;
-//        try {
-//            o_arrayList = databaseHelper.searchObservation(hike_Id);
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        if (o_arrayList.size()==0) txt_Otitle.setText("No record");
-//            else {
-//                txt_Otitle.setText("Qlsit\n");
-//                for (int i = 0;i < o_arrayList.size();i++){
-////                    txt_Otitle.append((CharSequence) o_arrayList.get(i)+"\n");
-//                    txt_Otitle.append(o_arrayList.get(i).getTitle() + "\n");
-//
-//                }
-//
-//            }
 
 
     }
