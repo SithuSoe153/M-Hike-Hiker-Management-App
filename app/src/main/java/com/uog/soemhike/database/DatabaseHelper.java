@@ -44,21 +44,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             , TABLE_HIKE, Hike.ID, Hike.NAME, Hike.LOCATION, Hike.DATE, Hike.PARKING, Hike.LENGTH, Hike.DIFFICULTY, Hike.DESCRIPTION);
 
 
-    private static final String CREATE_OBSERVATION_TABLE =String.format(
+    private static final String CREATE_OBSERVATION_TABLE = String.format(
             "CREATE TABLE IF NOT EXISTS %s (" +
                     " %s INTEGER PRIMARY KEY AUTOINCREMENT," +
                     " %s TEXT," +
                     " %s TEXT," +
-                    " %s integer,"+
-                    " FOREIGN KEY (%s)"+
+                    " %s TEXT," +
+                    " %s INTEGER," +
+                    " FOREIGN KEY (%s)" +
                     " REFERENCES %s(%s)" +
                     " ON DELETE CASCADE" +
                     ")"
-            , TABLE_OBSERVATION, Observation.O_ID, Observation.O_TITLE,Observation.O_YEAR, Observation.O_HIKEID, Observation.O_HIKEID, TABLE_HIKE, Hike.ID);
+            , TABLE_OBSERVATION, Observation.O_ID, Observation.O_TITLE, Observation.O_YEAR,  Observation.AVATAR_FILE_PATH, Observation.O_HIKEID, Observation.O_HIKEID, TABLE_HIKE, Hike.ID);
 
 
     public DatabaseHelper(Context context){
-        super(context, DATABASE_NAME, null, 3);
+        super(context, DATABASE_NAME, null, 1);
         database =getWritableDatabase();
         if(database !=null) database.execSQL( "PRAGMA encoding ='UTF-8'" );
     }
@@ -112,6 +113,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues rowValues =new ContentValues();
         rowValues.put(Observation.O_TITLE, observation.getTitle());
         rowValues.put(Observation.O_YEAR, observation.getYear());
+        rowValues.put(Observation.AVATAR_FILE_PATH, observation.avatarFilePath);
         rowValues.put(Observation.O_HIKEID, observation.getUser_id());
 
         result =database.insertOrThrow(TABLE_OBSERVATION, null, rowValues);
@@ -145,14 +147,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues rowValues =new ContentValues();
         rowValues.put(Observation.O_TITLE, observation.getTitle());
         rowValues.put(Observation.O_YEAR, observation.getYear());
-        rowValues.put(Observation.O_HIKEID, observation.getUser_id());
-//        rowValues.put(Hike.DATE, hike.getDate());
 
-        Log.i("test", "updateObservation");
+        String where = Observation.O_ID + "=?";
+        String values[] = {observation.getId() + ""};
+        result = database.update(TABLE_OBSERVATION, rowValues, where, values);
 
-        String where = "id=?";
-        String values[] = {observation.getId()+ ""};
-        result =database.update(TABLE_OBSERVATION,rowValues,where,values);
         return result;
     }
 
@@ -268,9 +267,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     cursor.getInt(0),
                     cursor.getString(1),
                     cursor.getString(2),
-                    cursor.getInt(3)
+                    cursor.getString(3),
+                    cursor.getInt(4)
 
             );
+
+//            observation = new Observation(
+//                    cursor.getInt(cursor.getColumnIndexOrThrow(Observation.O_ID)),
+//                    cursor.getString(cursor.getColumnIndexOrThrow(Observation.O_TITLE)),
+//                    cursor.getString(cursor.getColumnIndexOrThrow(Observation.O_YEAR)),
+//                    cursor.getString(cursor.getColumnIndexOrThrow(Observation.AVATAR_FILE_PATH)), // Corrected here
+//                    cursor.getInt(cursor.getColumnIndexOrThrow(Observation.O_HIKEID))
+//            );
+
             results.add(observation);
             cursor.moveToNext();
         }

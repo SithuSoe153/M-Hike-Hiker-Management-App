@@ -18,16 +18,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.uog.soemhike.AddObservationActivity;
+import com.uog.soemhike.DateUtils;
 import com.uog.soemhike.EntryActivity;
 import com.uog.soemhike.HikeDetailActivity;
+import com.uog.soemhike.MainActivity;
 import com.uog.soemhike.ObservationListActivity;
 import com.uog.soemhike.R;
 import com.uog.soemhike.adpater.HikeAdapter;
+import com.uog.soemhike.adpater.ObservationAdapter;
 import com.uog.soemhike.database.DatabaseHelper;
 import com.uog.soemhike.database.Hike;
+import com.uog.soemhike.database.Observation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +45,11 @@ public class DatabaseListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     EditText txtsearch;
+    FloatingActionButton fab_btn, fab_btn1;
+
+    TextView tv_press;
+
+
     public static final int UPDATE_REQUEST=1;
     public static final int SEARCH_REQUEST=2;
     @Override
@@ -47,10 +57,39 @@ public class DatabaseListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_database_list);
 
+        fab_btn = findViewById(R.id.fab_btn);
+        fab_btn1 = findViewById(R.id.fab_btn1);
+
         recyclerView=findViewById(R.id.RecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         databaseHelper=new DatabaseHelper(getBaseContext());
         hikeAdapter=new HikeAdapter(hikeList);
+        tv_press = findViewById(R.id.tv_press);
+
+
+
+
+        try {
+            hikeList = databaseHelper.search("");
+
+            if (hikeList.size()!=0){
+                tv_press.setVisibility(View.GONE);
+//            rec_ObservationList.setLayoutManager(new LinearLayoutManager(this));
+//            rec_ObservationList.setHasFixedSize(true);
+//            rec_ObservationList.setAdapter(new ObservationAdapter(this,o_List));
+
+            }else{
+                tv_press.setVisibility(View.VISIBLE);
+//            rec_ObservationList.setVisibility(View.GONE);
+//            tv_press.setText("No Record Found");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+
+
+
 
         hikeAdapter.setListener(new HikeAdapter.ClickListener() {
             @Override
@@ -64,7 +103,14 @@ public class DatabaseListActivity extends AppCompatActivity {
                 } else if (id==R.id.l_Item) {
                     Log.i("key", String.valueOf(hike.getId()));
                     Intent intent = new Intent(getBaseContext(), ObservationListActivity.class);
-                    intent.putExtra("user_id", hike.getId());
+                    intent.putExtra(Observation.O_HIKEID, hike.getId());
+                    intent.putExtra(Hike.NAME, hike.getName());
+                    intent.putExtra(Hike.LOCATION, hike.getLocation());
+                    intent.putExtra(Hike.DATE, hike.getDate());
+                    intent.putExtra(Hike.PARKING, hike.getParking());
+                    intent.putExtra(Hike.LENGTH, hike.getLength());
+                    intent.putExtra(Hike.DIFFICULTY, hike.getDifficulty());
+                    intent.putExtra(Hike.DESCRIPTION, hike.getDescription());
                     startActivity(intent);
                 } else if (id == R.id.btn_Remove) {
 
@@ -103,6 +149,22 @@ public class DatabaseListActivity extends AppCompatActivity {
         });
 
 
+        fab_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), EntryActivity.class);
+                startActivity(intent);
+                Log.i("cc", "cc");
+            }
+        });
+        fab_btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), GPTActivity.class);
+                startActivity(intent);
+                Log.i("cc", "cc");
+            }
+        });
 
 
         recyclerView.setAdapter(hikeAdapter);
@@ -200,7 +262,11 @@ public class DatabaseListActivity extends AppCompatActivity {
             public void run() {
                 try {
                     hikeList=databaseHelper.searchHike(keyword);
-                    Log.i("MyName", hikeList.size() + "");
+//                    Log.i("MyName", hikeList.size() + "");
+                    for (Hike hike : hikeList) {
+                        hike.setTimeDifference(DateUtils.getTimeDifference(hike.getDate()));
+                    }
+
                     hikeAdapter.setHikesList(hikeList);
                     hikeAdapter.notifyDataSetChanged(); //refresh the data
                 }

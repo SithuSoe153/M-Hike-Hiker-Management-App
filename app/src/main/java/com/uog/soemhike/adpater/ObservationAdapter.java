@@ -3,27 +3,30 @@ package com.uog.soemhike.adpater;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.uog.soemhike.R;
-import com.uog.soemhike.activity.DatabaseListActivity;
+import com.uog.soemhike.UpdateObservationActivity;
 import com.uog.soemhike.database.DatabaseHelper;
-import com.uog.soemhike.database.Hike;
 import com.uog.soemhike.database.Observation;
+import com.uog.soemhike.ObservationImageActivity;
 
-import java.util.ArrayList;
 import java.util.List;
+
 
 public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.ViewHolder> {
 
@@ -31,7 +34,10 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
     List<Observation> arrayList;
     DatabaseHelper databaseHelper;
 
-        public ObservationAdapter(Context context, List<Observation> arrayList) {
+    public String avatarFilePath;
+
+
+    public ObservationAdapter(Context context, List<Observation> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
         this.databaseHelper = new DatabaseHelper(context);
@@ -50,23 +56,51 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
     public void onBindViewHolder( ViewHolder holder, int position) {
         Observation o_Record = arrayList.get(position);
 
-//        holder.iv_Oimage.setImageResource(R.drawable.ic_launcher_background);
+        avatarFilePath = o_Record.avatarFilePath;
+
+        // Load and display avatar image if available
+        if (avatarFilePath != null) {
+
+            // Handle the image file path, for example, set it to an ImageView
+            Bitmap bitmap = BitmapFactory.decodeFile(avatarFilePath);
+            if (bitmap != null) {
+//                avatarImageView.setImageBitmap(bitmap);
+                holder.iv_Oimage.setImageBitmap(bitmap);
+
+            } else {
+                // Handle the case where the image couldn't be loaded
+                holder.iv_Oimage.setImageResource(R.drawable.default_avatar); // Set a default image
+            }
+
+        }
+
+
         holder.txt_Otitle.setText(o_Record.getTitle());
+        holder.txt_Year.setText(o_Record.getYear());
 
 
         holder.btn_OEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Log.i("info", "Clicked");
-
+                update_Observation(o_Record);
             }
         });
 
         holder.btn_ODelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteObservation(o_Record);
+                delete_Observation(o_Record);
+            }
+        });
+
+        holder.l_oitem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ObservationImageActivity.class);
+                intent.putExtra(Observation.O_ID, o_Record.getId());
+                intent.putExtra(Observation.AVATAR_FILE_PATH, o_Record.getAvatarFilePath());
+                context.startActivity(intent);
             }
         });
 
@@ -87,7 +121,7 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
 //=========================
 //=========================
 
-    private void deleteObservation(Observation o){
+    private void delete_Observation(Observation o){
 
 //        long result = databaseHelper.delete_Observation(o.getId());
 
@@ -99,17 +133,10 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Log.i("test1", String.valueOf(o.getId()));
 //
-//                        if (result != 1) {
-//                            new android.app.AlertDialog.Builder(context).setTitle("Error").setMessage("Still can't delete this Hike").show();
-//                        } else {
-//                           search("");
-//                        }
-
                         databaseHelper.delete_Observation(o.getId());
                         ((Activity)context).finish();
                         context.startActivity(((Activity) context).getIntent());
 
-//                        notifyDataSetChanged();
 
 
                     }
@@ -123,10 +150,23 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
                 .show();
     }
 
+    private void update_Observation(Observation o){
+        Intent intent = new Intent(context, UpdateObservationActivity.class);
+        intent.putExtra(Observation.O_ID, o.getId());
+        intent.putExtra(Observation.O_TITLE, o.getTitle());
+        intent.putExtra(Observation.O_YEAR, o.getYear());
+        intent.putExtra(Observation.O_HIKEID, o.getUser_id());
+        intent.putExtra(Observation.AVATAR_FILE_PATH, o.getAvatarFilePath());
+        context.startActivity(intent);
+
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         ImageView iv_Oimage;
         TextView txt_Otitle;
+        TextView txt_Year;
+        ConstraintLayout l_oitem;
         ImageButton btn_OEdit, btn_ODelete;
 
 
@@ -135,6 +175,8 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
 
             iv_Oimage = itemView.findViewById(R.id.iv_Oimage);
             txt_Otitle = itemView.findViewById(R.id.txt_Otitle);
+            txt_Year = itemView.findViewById(R.id.txt_Year);
+            l_oitem = itemView.findViewById(R.id.l_oitem);
             btn_OEdit = itemView.findViewById(R.id.btn_OEdit);
             btn_ODelete = itemView.findViewById(R.id.btn_ODelete);
 

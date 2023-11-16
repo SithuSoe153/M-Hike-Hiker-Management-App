@@ -33,13 +33,22 @@ public class EntryActivity extends AppCompatActivity {
 
     Spinner spn_Location, spn_Difficulty;
 
+    //Spin Group
+    private Spinner spinnerHikeNames;
+    private Spinner spinnerLocations;
+//Spin Group
+
     private Button btn_ShowDateTime, btn_Next, btn_Back;
 
-    String location, difficulty, errorRequired;
+    String name, location, difficulty, errorRequired;
     private Integer id;
-    private Integer locationIndex = 0;
+    private Integer nameIndex = 0;
     private Integer difficultyIndex = 0;
-    public static final String[] spn_Location_data = {"Select a location","M1", "M2", "M3"};
+//    public static final String[] spn_Location_data = {"Select a location","M1", "M2", "M3"};
+
+    // Define arrays for hike names and corresponding locations
+    private String[] hikeNames = {"Select a Hike Name", "Ben Nevis", "Snowdon", "Lake District National Park", "The Giant's Causeway", "Isle of Skye"};
+
     private String[] spn_Difficulty_data = {"Select a difficulty","H1", "H2", "H3"};
 
 
@@ -57,7 +66,7 @@ public class EntryActivity extends AppCompatActivity {
         lbl_h5 =findViewById(R.id.lbl_h5);
         lbl_h6 =findViewById(R.id.lbl_h6);
 
-        txt_NameOfHike = findViewById(R.id.txt_NameOfHike);
+//        txt_NameOfHike = findViewById(R.id.txt_NameOfHike);
         txt_LengthOfHike = findViewById(R.id.txt_LengthOfHike);
         txt_Description = findViewById(R.id.txt_Description);
 
@@ -68,26 +77,66 @@ public class EntryActivity extends AppCompatActivity {
         btn_Next = findViewById(R.id.btn_Next);
         btn_Back = findViewById(R.id.btn_Back);
 
-        spn_Location = (Spinner) findViewById(R.id.spn_Location);
+//        spn_Location = (Spinner) findViewById(R.id.spn_Location);
         spn_Difficulty = (Spinner) findViewById(R.id.spn_Difficulty);
+
+//        spin group
+
+        // Assuming you have defined your spinners in the layout XML file
+        spinnerHikeNames = findViewById(R.id.spinnerHikeNames);
+        spinnerLocations = findViewById(R.id.spinnerLocations);
+
+
+        // Create ArrayAdapter for hike names
+        ArrayAdapter<String> hikeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, hikeNames);
+        hikeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Set ArrayAdapter for hike names to Spinner A
+        spinnerHikeNames.setAdapter(hikeAdapter);
+
+        // Set listener for Spinner A to update options in Spinner B
+        spinnerHikeNames.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                // Get the selected hike name
+                String selectedHike = (String) parentView.getSelectedItem();
+                name = hikeNames[position];
+                Log.i("item", name);
+
+
+                // Find the corresponding location based on the selected hike
+                String correspondingLocation = getCorrespondingLocation(selectedHike);
+
+                // Update options in Spinner B
+                updateLocationSpinner(correspondingLocation);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // Do nothing here
+            }
+        });
+
+//        spin group
+
 
         errorRequired = "Required field";
 
-        ArrayAdapter<String> ad_location = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spn_Location_data);
-        ad_location.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spn_Location.setAdapter(ad_location);
-        spn_Location.setSelection(locationIndex);
-        spn_Location.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                location = spn_Location_data[i];
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+//        ArrayAdapter<String> ad_location = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spn_Location_data);
+//        ad_location.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spn_Location.setAdapter(ad_location);
+//        spn_Location.setSelection(locationIndex);
+//        spn_Location.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+////                location = spn_Location_data[i];
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
 
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spn_Difficulty_data);
@@ -125,13 +174,16 @@ public class EntryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (id != null){
-                    Intent intent = new Intent(getBaseContext(), DatabaseListActivity.class);
-                    startActivity(intent);
-                }else {
-                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                    startActivity(intent);
-                }
+//                if (id != null){
+//                    Intent intent = new Intent(getBaseContext(), DatabaseListActivity.class);
+//                    startActivity(intent);
+//                }else {
+//                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
+//                    startActivity(intent);
+//                }
+
+                Intent intent = new Intent(getBaseContext(), DatabaseListActivity.class);
+                startActivity(intent);
 
                 Log.i("test", id+"This is idid");
 
@@ -141,19 +193,60 @@ public class EntryActivity extends AppCompatActivity {
         recievedData();
     }
 
+
+    private void updateLocationSpinner(String location) {
+        ArrayAdapter<String> locationAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new String[]{location});
+        locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Set ArrayAdapter for locations to Spinner B
+        spinnerLocations.setAdapter(locationAdapter);
+    }
+
+
+    private String getCorrespondingLocation(String selectedHike) {
+        // Implement your logic to map hike names to locations
+        // For simplicity, using a hardcoded mapping in this example
+        switch (selectedHike) {
+            case "Select a Hike Name":
+                location = "";
+                return "Select Hike Name first";
+            case "Ben Nevis":
+                location = "Scotland";
+                return "Scotland";
+            case "Snowdon":
+                location = "Scotland";
+                return "Wales";
+            case "Lake District National Park":
+                location = "Scotland";
+                return "England";
+            case "The Giant's Causeway":
+                location = "Scotland";
+                return "Northern Ireland";
+            case "Isle of Skye":
+                location = "Scotland";
+                return "Scotland";
+            default:
+                return "";
+        }
+    }
+
 //    Functions
 
     private void recievedData(){
         Bundle bundle = getIntent().getExtras();
         if (bundle !=null){
             id=bundle.getInt(Hike.ID);
-            txt_NameOfHike.setText(bundle.getString(Hike.NAME));
+//            txt_NameOfHike.setText(bundle.getString(Hike.NAME));
+
+
 //            spn_Location.setText(bundle.getString(Hike.ADDRESS));
-            location = bundle.getString(Hike.LOCATION);
-            for (int i=0; i< spn_Location_data.length; i++){
-                if (location.equals(spn_Location_data[i])){
-                    locationIndex = i;
-                    spn_Location.setSelection(locationIndex);
+
+
+            name = bundle.getString(Hike.NAME);
+            for (int i=0; i< hikeNames.length; i++){
+                if (name.equals(hikeNames[i])){
+                    nameIndex = i;
+                    spinnerHikeNames.setSelection(nameIndex);
                     break;
                 }
             }
@@ -187,12 +280,12 @@ public class EntryActivity extends AppCompatActivity {
     }
 
     public void setDate(LocalDate date){
-        ZonedDateTime zdt = ZonedDateTime.now();
-        lbl_Date.setText(zdt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        lbl_Date.setText(date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
     }
 
     private void goToNext(){
-        String name = txt_NameOfHike.getText().toString();
+//        String name = txt_NameOfHike.getText().toString();
         String date = lbl_Date.getText().toString();
         String parking = rdo_Yes.isChecked()?"Yes" : "No";
         String length = txt_LengthOfHike.getText().toString();
@@ -201,15 +294,25 @@ public class EntryActivity extends AppCompatActivity {
             description = "Default description";
         }
 
-        if(name==null || name.trim().isEmpty()){
-            new AlertDialog.Builder(this).setTitle(errorRequired).setMessage("Please Enter the Name of Hike").show();
-            txt_NameOfHike.requestFocus();
+//        if(name==null || name.trim().isEmpty()){
+//            new AlertDialog.Builder(this).setTitle(errorRequired).setMessage("Please Enter the Name of Hike").show();
+//            txt_NameOfHike.requestFocus();
+//
+//            lbl_h1.setVisibility(View.VISIBLE);
+//
+//            return;
+//        }else{
+//            lbl_h1.setVisibility(View.INVISIBLE);
+//
+//        }
 
+        if (name=="Select Hike Name first" || location.trim().isEmpty()) {
+            new AlertDialog.Builder(this).setTitle(errorRequired).setMessage("Please Enter the Name of Hike").show();
             lbl_h1.setVisibility(View.VISIBLE);
 
             return;
         }else{
-            lbl_h1.setVisibility(View.INVISIBLE);
+            lbl_h2.setVisibility(View.INVISIBLE);
 
         }
 

@@ -5,6 +5,7 @@ public class Observation {
     public static final String O_ID = "OID";
     public static final String O_TITLE = "oTitle";
     public static final String O_YEAR = "oYear";
+    public static final String AVATAR_FILE_PATH = "avatarFilePath";
 
     public static final String O_HIKEID = "hikeId";
 
@@ -13,17 +14,28 @@ public class Observation {
     private Integer id;
     private String title;
     private String year;
+    public String avatarFilePath;
     private int user_id;
 
-    public Observation(String title,String year, int user_id) {
+    public Observation(String title,String year, String avatarFilePath, int user_id) {
         this.title = title;
         this.year = year;
+        this.avatarFilePath = avatarFilePath;
         this.user_id = user_id;
     }
 
-    public Observation(Integer id, String title, String year, int user_id) {
+    public Observation (int id, String title, String year, String avatarFilePath){
         this.id = id;
         this.title = title;
+        this.year = year;
+        this.avatarFilePath = avatarFilePath;
+
+    }
+    public Observation(Integer id, String title, String year, String avatarFilePath, int user_id) {
+        this.id = id;
+        this.title = title;
+        this.year = year;
+        this.avatarFilePath = avatarFilePath;
         this.user_id = user_id;
     }
 
@@ -50,6 +62,16 @@ public class Observation {
     public void setTitle(String title) {
         this.title = title;
     }
+
+//
+    public String getAvatarFilePath() {
+        return avatarFilePath;
+    }
+
+    public void setAvatarFilePath(String avatarFilePath) {
+        this.avatarFilePath = avatarFilePath;
+    }
+//
 
     public int getUser_id() {
         return user_id;

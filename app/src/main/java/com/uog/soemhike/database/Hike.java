@@ -22,6 +22,16 @@ public class Hike {
     private String description;
 
 
+    private String timeDifference;
+
+    public String getTimeDifference() {
+        return timeDifference;
+    }
+
+    public void setTimeDifference(String timeDifference) {
+        this.timeDifference = timeDifference;
+    }
+
     public Hike() {
     }
 

@@ -49,7 +49,9 @@ public interface ClickListener{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
+
         Hike hike = hikesList.get(position);
+        holder.lbl_diff.setText(hike.getTimeDifference());
         holder.lbl_Id.setText(hike.getId() + "");
         holder.lbl_Name.setText(hike.getName());
         holder.lbl_Location.setText(hike.getLocation());
@@ -69,7 +71,7 @@ public interface ClickListener{
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
-    TextView lbl_Id, lbl_Name, lbl_Location, lbl_Date, lbl_Parking, lbl_Length, lbl_difficulty, lbl_Description;
+    TextView lbl_diff,lbl_Id, lbl_Name, lbl_Location, lbl_Date, lbl_Parking, lbl_Length, lbl_difficulty, lbl_Description;
     Button btn_Remove, btn_Edit;
     LinearLayout l_Item;
 
@@ -77,6 +79,7 @@ public interface ClickListener{
     public ViewHolder(@NonNull View itemView) {
         super(itemView);
 
+        lbl_diff = itemView.findViewById(R.id.lbl_diff);
         lbl_Id = itemView.findViewById(R.id.lbl_Id);
         lbl_Name = itemView.findViewById(R.id.lbl_Name);
         lbl_Location = itemView.findViewById(R.id.lbl_Location);

@@ -5,18 +5,136 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ObservationListActivity">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
 
-    <Button
-        android:id="@+id/btn_AddNewObservation"
+    >
+
+    <!--
+  -->
+
+
+
+
+    <TextView
+        android:id="@+id/lbl_Name1"
+        android:textSize="30sp"
+        android:text="Test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:text="Add New Observation"
+        />
+
+    <TextView
+        android:id="@+id/lbl_Id1"
+        android:textSize="30sp"
+        android:text="Test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        />
 
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_NoRecord" />
+
+    <TextView
+        android:id="@+id/lbl_Location1"
+        android:textSize="30sp"
+        android:text="Test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        />
+
+    <TextView
+        android:id="@+id/lbl_Date1"
+        android:textSize="30sp"
+        android:text="Test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        />
+
+    <TextView
+        android:id="@+id/lbl_Parking1"
+        android:textSize="30sp"
+        android:text="Test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        />
+
+    <TextView
+        android:id="@+id/lbl_Length1"
+        android:textSize="30sp"
+        android:text="Test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        />
+
+    <TextView
+        android:id="@+id/lbl_difficulty1"
+        android:textSize="30sp"
+        android:text="Test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        />
+
+    <TextView
+        android:id="@+id/lbl_diff1"
+        android:textSize="30sp"
+        android:text="Test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        />
+
+    <TextView
+        android:id="@+id/lbl_Description1"
+        android:textSize="30sp"
+        android:text="Test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        />
+
+    <!--
+    -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="30dp"
+        >
+        <Button
+            android:id="@+id/btn_AddNewObservation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add New Observation"
+
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btn_Back"
+            tools:layout_editor_absoluteY="50dp" />
+
+        <Button
+            android:id="@+id/btn_Back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Back"
+
+
+            app:layout_constraintEnd_toStartOf="@+id/btn_AddNewObservation"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="50dp" />
+
+    </LinearLayout>
+
 
 
     <TextView
@@ -29,7 +147,8 @@
         android:visibility="visible"
 
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/rec_ObservationList" />
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -39,6 +158,9 @@
         android:layout_marginTop="50dp"
 
         />
+
+</LinearLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

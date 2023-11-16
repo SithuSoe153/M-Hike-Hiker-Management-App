@@ -7,6 +7,15 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/lbl_diff"
+        android:textSize="30sp"
+
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+
+        />
+
+    <TextView
         android:id="@+id/lbl_Id"
         android:textSize="30sp"
 

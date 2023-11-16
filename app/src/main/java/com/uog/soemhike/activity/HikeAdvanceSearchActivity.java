@@ -1,6 +1,6 @@
 package com.uog.soemhike.activity;
 
-import static com.uog.soemhike.EntryActivity.spn_Location_data;
+//import static com.uog.soemhike.EntryActivity.spn_Location_data;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -48,23 +48,23 @@ public class HikeAdvanceSearchActivity extends AppCompatActivity {
         btnAdvdate=findViewById(R.id.btnAdvShowDateTime);
         btnAdvSearch=findViewById(R.id.btn_AdvSearch);
 
-        ArrayAdapter<String> adapterLocation = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spn_Location_data);
-        adapterLocation.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnAdvLocation.setAdapter(adapterLocation);
-        spnAdvLocation.setSelection(0);
-        spnAdvLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-                location=spn_Location_data[i];
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+//        ArrayAdapter<String> adapterLocation = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spn_Location_data);
+//        adapterLocation.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spnAdvLocation.setAdapter(adapterLocation);
+//        spnAdvLocation.setSelection(0);
+//        spnAdvLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//
+//                location=spn_Location_data[i];
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
         btnAdvdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
