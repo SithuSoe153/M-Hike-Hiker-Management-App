@@ -1,32 +1,37 @@
 package com.uog.soemhike;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Location;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.uog.soemhike.activity.DatabaseListActivity;
-import com.uog.soemhike.adpater.HikeAdapter;
 import com.uog.soemhike.adpater.ObservationAdapter;
 import com.uog.soemhike.database.DatabaseHelper;
 import com.uog.soemhike.database.Hike;
 import com.uog.soemhike.database.Observation;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class ObservationListActivity extends AppCompatActivity {
 
@@ -39,7 +44,13 @@ public class ObservationListActivity extends AppCompatActivity {
     Button btn_AddNewObservation, btn_Back;
     public int hike_Id;
 
-    TextView lbl_diff,lbl_Id, lbl_Name, lbl_Location, lbl_Date, lbl_Parking, lbl_Length, lbl_difficulty, lbl_Description;
+    TextView lbl_diff,lbl_Id, lbl_Name,lbl_W1, lbl_Location, lbl_Date, lbl_Parking, lbl_Length, lbl_difficulty, lbl_Description;
+
+
+    private final String url = "http://api.openweathermap.org/data/2.5/weather";
+    private final String appid = "1aecce68e2aa97be4985f8d8cdc072c5";
+    DecimalFormat df = new DecimalFormat("#.##");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,9 +99,13 @@ public class ObservationListActivity extends AppCompatActivity {
 
         //
 
+
+
+
         lbl_Id = findViewById(R.id.lbl_Id1);
         lbl_diff = findViewById(R.id.lbl_diff1);
         lbl_Name = findViewById(R.id.lbl_Name1);
+        lbl_W1 = findViewById(R.id.lbl_W1);
         lbl_Location = findViewById(R.id.lbl_Location1);
         lbl_Date = findViewById(R.id.lbl_Date1);
         lbl_Parking = findViewById(R.id.lbl_Parking1);
@@ -105,6 +120,7 @@ public class ObservationListActivity extends AppCompatActivity {
         lbl_Length.setText(String.valueOf(LENGTH));
         lbl_difficulty.setText(DIFFICULTY);
         lbl_Description.setText(DESCRIPTION);
+        getWeatherDetails();
 
 
 
@@ -132,4 +148,39 @@ public class ObservationListActivity extends AppCompatActivity {
 
 
     }
+
+//
+
+    private void getWeatherDetails() {
+        String tempUrl = url + "?q=" + lbl_Location.getText().toString().trim() + "&appid=" + appid;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, tempUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    JSONObject jsonObjectMain = jsonResponse.getJSONObject("main");
+                    double temp = jsonObjectMain.getDouble("temp") - 273.15;
+
+                    // Set the temperature to lbl_W1
+                    lbl_W1.setText("Temperature: " + df.format(temp) + " °C");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // Handle error
+                Toast.makeText(getApplicationContext(), "Error fetching weather data", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+    }
+
+
+//
 }
+//
