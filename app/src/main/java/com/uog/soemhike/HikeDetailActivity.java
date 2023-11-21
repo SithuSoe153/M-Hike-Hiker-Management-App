@@ -3,6 +3,7 @@ package com.uog.soemhike;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -88,7 +89,17 @@ public class HikeDetailActivity extends AppCompatActivity {
                     new AlertDialog.Builder(HikeDetailActivity.this)
                             .setTitle("Success")
                             .setMessage("Data Saved")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // Add any actions you want to perform when the "OK" button is clicked
+                                    Intent intent = new Intent(getBaseContext(), DatabaseListActivity.class);
+                                    startActivity(intent);
+                                    dialog.dismiss(); // Close the dialog if needed
+                                }
+                            })
                             .show();
+
+
 
                 } else {
                     result =databaseHelper.updateHike(hike);

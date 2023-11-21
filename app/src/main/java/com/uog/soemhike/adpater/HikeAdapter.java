@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.uog.soemhike.R;
@@ -52,14 +53,14 @@ public interface ClickListener{
 
         Hike hike = hikesList.get(position);
         holder.lbl_diff.setText(hike.getTimeDifference());
-        holder.lbl_Id.setText(hike.getId() + "");
+//        holder.lbl_Id.setText(hike.getId() + "");
         holder.lbl_Name.setText(hike.getName());
         holder.lbl_Location.setText(hike.getLocation());
         holder.lbl_Date.setText(hike.getDate());
-        holder.lbl_Parking.setText(hike.getParking() + "");
-        holder.lbl_Length.setText(hike.getLength() + "");
-        holder.lbl_difficulty.setText(hike.getDifficulty() + "");
-        holder.lbl_Description.setText(hike.getDescription() + "");
+//        holder.lbl_Parking.setText(hike.getParking() + "");
+//        holder.lbl_Length.setText(hike.getLength() + "");
+//        holder.lbl_difficulty.setText(hike.getDifficulty() + "");
+//        holder.lbl_Description.setText(hike.getDescription() + "");
 
 
     }
@@ -73,21 +74,21 @@ public interface ClickListener{
 
     TextView lbl_diff,lbl_Id, lbl_Name, lbl_Location, lbl_Date, lbl_Parking, lbl_Length, lbl_difficulty, lbl_Description;
     Button btn_Remove, btn_Edit;
-    LinearLayout l_Item;
+    ConstraintLayout l_Item;
 
 
     public ViewHolder(@NonNull View itemView) {
         super(itemView);
 
         lbl_diff = itemView.findViewById(R.id.lbl_diff);
-        lbl_Id = itemView.findViewById(R.id.lbl_Id);
+//        lbl_Id = itemView.findViewById(R.id.lbl_Id);
         lbl_Name = itemView.findViewById(R.id.lbl_Name);
         lbl_Location = itemView.findViewById(R.id.lbl_Location);
         lbl_Date = itemView.findViewById(R.id.lbl_Date);
-        lbl_Parking = itemView.findViewById(R.id.lbl_Parking);
-        lbl_Length = itemView.findViewById(R.id.lbl_Length);
-        lbl_difficulty = itemView.findViewById(R.id.lbl_difficulty);
-        lbl_Description = itemView.findViewById(R.id.lbl_Description);
+//        lbl_Parking = itemView.findViewById(R.id.lbl_Parking);
+//        lbl_Length = itemView.findViewById(R.id.lbl_Length);
+//        lbl_difficulty = itemView.findViewById(R.id.lbl_difficulty);
+//        lbl_Description = itemView.findViewById(R.id.lbl_Description);
 
         btn_Remove = itemView.findViewById(R.id.btn_Remove);
         btn_Edit = itemView.findViewById(R.id.btn_Edit);
