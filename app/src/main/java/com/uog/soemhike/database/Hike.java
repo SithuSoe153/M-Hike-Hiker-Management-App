@@ -7,6 +7,7 @@ public class Hike {
     public static final String DATE = "date";
     public static final String PARKING = "parking";
     public static final String LENGTH = "length";
+    public static final String WEATHER = "weather";
     public static final String DIFFICULTY = "difficulty";
     public static final String DESCRIPTION = "description";
 
@@ -18,6 +19,7 @@ public class Hike {
     private String date;
     private String parking;
     private Double length;
+    private String weather;
     private String difficulty;
     private String description;
 
@@ -35,7 +37,7 @@ public class Hike {
     public Hike() {
     }
 
-    public Hike(Integer id, String name, String location, String date, String parking, Double length, String difficulty, String description) {
+    public Hike(Integer id, String name, String location, String date, String parking, Double length, String difficulty, String weather, String description) {
         this.id = id;
         this.name = name;
         this.location = location;
@@ -43,16 +45,18 @@ public class Hike {
         this.parking = parking;
         this.length = length;
         this.difficulty = difficulty;
+        this.weather = weather;
         this.description = description;
     }
 
-    public Hike(String name, String location, String date, String parking, Double length, String difficulty, String description) {
+    public Hike(String name, String location, String date, String parking, Double length, String difficulty, String weather, String description) {
         this.name = name;
         this.location = location;
         this.date = date;
         this.parking = parking;
         this.length = length;
         this.difficulty = difficulty;
+        this.weather = weather;
         this.description = description;
     }
 
@@ -118,6 +122,15 @@ public class Hike {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+
+    public String getWeather() {
+        return weather;
+    }
+
+    public void setWeather(String weather) {
+        this.weather = weather;
     }
 }
 

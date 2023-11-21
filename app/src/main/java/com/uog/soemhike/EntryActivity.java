@@ -31,7 +31,7 @@ public class EntryActivity extends AppCompatActivity {
     private EditText txt_NameOfHike, txt_LengthOfHike, txt_Description;
     private RadioButton rdo_Yes, rdo_No;
 
-    Spinner spn_Location, spn_Difficulty;
+    Spinner spn_Location, spn_Difficulty, spn_Weather;
 
     //Spin Group
     private Spinner spinnerHikeNames;
@@ -40,16 +40,18 @@ public class EntryActivity extends AppCompatActivity {
 
     private Button btn_ShowDateTime, btn_Next, btn_Back;
 
-    String name, location, difficulty, errorRequired;
+    String name, location, difficulty, weather, errorRequired;
     private Integer id;
     private Integer nameIndex = 0;
     private Integer difficultyIndex = 0;
+    private Integer weatherIndex = 0;
 //    public static final String[] spn_Location_data = {"Select a location","M1", "M2", "M3"};
 
     // Define arrays for hike names and corresponding locations
-    private String[] hikeNames = {"Select a Hike Name", "Ben Nevis", "Snowdon", "Lake District National Park", "The Giant's Causeway", "Isle of Skye"};
+    private String[] hikeNames = {"Select a Hike Name", "Ben Nevis", "Brecon Beacons National Park", "Cairngorms National Park", "Dartmoor National Park","Glen Coe", "Glenfinnan Viaduct","Isle of Skye", "Lake District National Park","Malham Cove", "Mourne Mountains","Peak District National Park", "Pembrokeshire Coast Path","Seven Sisters Cliffs", "Scafell Pike","Snowdon", "South Downs Way","The Dark Hedges", "The Giant's Causeway","The Needles", "The Ridgeway","Tintagel to Boscastle", "West Highland Way"};
 
-    private String[] spn_Difficulty_data = {"Select a difficulty","H1", "H2", "H3"};
+    private String[] spn_Difficulty_data = {"Select a difficulty", "Easy", "Moderate", "Challenging", "Difficult"};
+    private String[] spn_Weather_data = {"Select Weather", "Sunny", "Rainy", "Cold"};
 
 
     @Override
@@ -79,6 +81,7 @@ public class EntryActivity extends AppCompatActivity {
 
 //        spn_Location = (Spinner) findViewById(R.id.spn_Location);
         spn_Difficulty = (Spinner) findViewById(R.id.spn_Difficulty);
+        spn_Weather = (Spinner) findViewById(R.id.spn_Weather);
 
 //        spin group
 
@@ -106,6 +109,7 @@ public class EntryActivity extends AppCompatActivity {
 
                 // Find the corresponding location based on the selected hike
                 String correspondingLocation = getCorrespondingLocation(selectedHike);
+                location =  getCorrespondingLocation(selectedHike);
 
                 // Update options in Spinner B
                 updateLocationSpinner(correspondingLocation);
@@ -154,6 +158,22 @@ public class EntryActivity extends AppCompatActivity {
 
             }
         });
+
+        ArrayAdapter<String> weatherAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spn_Weather_data);
+                weatherAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spn_Weather.setAdapter(weatherAdapter);
+                spn_Weather.setSelection(weatherIndex);
+                    spn_Weather.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        weather = spn_Weather_data[i];
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
 
 
         btn_ShowDateTime.setOnClickListener(new View.OnClickListener() {
@@ -211,20 +231,53 @@ public class EntryActivity extends AppCompatActivity {
                 location = "";
                 return "Select Hike Name first";
             case "Ben Nevis":
-                location = "Scotland";
                 return "Scotland";
-            case "Snowdon":
-                location = "Scotland";
-                return "Wales";
-            case "Lake District National Park":
-                location = "Scotland";
-                return "England";
-            case "The Giant's Causeway":
-                location = "Scotland";
-                return "Northern Ireland";
             case "Isle of Skye":
-                location = "Scotland";
                 return "Scotland";
+            case "West Highland Way":
+                return "Scotland";
+            case "Cairngorms National Park":
+                return "Scotland";
+            case "Glen Coe":
+                return "Scotland";
+            case "Glenfinnan Viaduct":
+                return "Scotland";
+
+            case "Snowdon":
+                return "Wales";
+            case "Pembrokeshire Coast Path":
+                return "Wales";
+            case "Brecon Beacons National Park":
+                return "Wales";
+
+            case "Lake District National Park":
+                return "England";
+            case "Dartmoor National Park":
+                return "England";
+            case "Peak District National Park":
+                return "England";
+            case "South Downs Way":
+                return "England";
+            case "The Ridgeway":
+                return "England";
+            case "Malham Cove":
+                return "England";
+            case "Tintagel to Boscastle":
+                return "England";
+            case "Scafell Pike":
+                return "England";
+            case "Seven Sisters":
+                return "England";
+            case "The Needles":
+                return "England";
+
+            case "The Giant's Causeway":
+            return "Ireland";
+            case "Mourne Mountains":
+                return "Ireland";
+            case "The Dark Hedges":
+                return "Ireland";
+
             default:
                 return "";
         }
@@ -260,6 +313,15 @@ public class EntryActivity extends AppCompatActivity {
                 }
             }
 
+            weather = bundle.getString(Hike.WEATHER);
+            for (int i=0; i< spn_Weather_data.length; i++){
+                if (    weather.equals(spn_Weather_data[i])){
+                    weatherIndex = i;
+                    spn_Weather.setSelection(weatherIndex);
+                    break;
+                }
+            }
+
             lbl_Date.setText(bundle.getString(Hike.DATE));
 //            rdo_Yes.setText(bundle.getInt(Hike.PARKING) + "");
 //          Check the appropriate radio button based on the data
@@ -290,8 +352,10 @@ public class EntryActivity extends AppCompatActivity {
         String parking = rdo_Yes.isChecked()?"Yes" : "No";
         String length = txt_LengthOfHike.getText().toString();
         String description = txt_Description.getText().toString(); //Optional
+
         if (description == null || description.isEmpty()) {
-            description = "Default description";
+//            description = "Default description";
+            description = "-";
         }
 
 //        if(name==null || name.trim().isEmpty()){
@@ -386,6 +450,7 @@ public class EntryActivity extends AppCompatActivity {
         intent.putExtra(Hike.DATE, date);
         intent.putExtra(Hike.PARKING, parking);
         intent.putExtra(Hike.LENGTH, length);
+        intent.putExtra(Hike.WEATHER, weather);
         intent.putExtra(Hike.DIFFICULTY, difficulty);
         intent.putExtra(Hike.DESCRIPTION, description);
         startActivity(intent);

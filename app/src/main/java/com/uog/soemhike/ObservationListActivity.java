@@ -44,7 +44,7 @@ public class ObservationListActivity extends AppCompatActivity {
     Button btn_AddNewObservation, btn_Back;
     public int hike_Id;
 
-    TextView lbl_diff,lbl_Id, lbl_Name,lbl_W1, lbl_Location, lbl_Date, lbl_Parking, lbl_Length, lbl_difficulty, lbl_Description;
+    TextView lbl_diff,lbl_Id, lbl_Name, lbl_W1, lbl_W2, lbl_W3, lbl_W4, lbl_W5, lbl_Location, lbl_Date, lbl_Parking, lbl_Length, lbl_Weather, lbl_difficulty, lbl_Description;
 
 
     private final String url = "http://api.openweathermap.org/data/2.5/weather";
@@ -70,6 +70,7 @@ public class ObservationListActivity extends AppCompatActivity {
         String DATE = bundle.getString(Hike.DATE);
         String PARKING = bundle.getString(Hike.PARKING);
         Double LENGTH = bundle.getDouble(Hike.LENGTH);
+        String WEATHER = bundle.getString(Hike.WEATHER);
         String DIFFICULTY = bundle.getString(Hike.DIFFICULTY);
         String DESCRIPTION = bundle.getString(Hike.DESCRIPTION);
 
@@ -102,14 +103,19 @@ public class ObservationListActivity extends AppCompatActivity {
 
 
 
-        lbl_Id = findViewById(R.id.lbl_Id1);
-        lbl_diff = findViewById(R.id.lbl_diff1);
+//        lbl_Id = findViewById(R.id.lbl_Id1);
+//        lbl_diff = findViewById(R.id.lbl_diff1);
         lbl_Name = findViewById(R.id.lbl_Name1);
         lbl_W1 = findViewById(R.id.lbl_W1);
+        lbl_W2 = findViewById(R.id.lbl_W2);
+        lbl_W3 = findViewById(R.id.lbl_W3);
+        lbl_W4 = findViewById(R.id.lbl_W4);
+        lbl_W5 = findViewById(R.id.lbl_W5);
         lbl_Location = findViewById(R.id.lbl_Location1);
         lbl_Date = findViewById(R.id.lbl_Date1);
         lbl_Parking = findViewById(R.id.lbl_Parking1);
         lbl_Length = findViewById(R.id.lbl_Length1);
+        lbl_Weather = findViewById(R.id.lbl_Weather1);
         lbl_difficulty = findViewById(R.id.lbl_difficulty1);
         lbl_Description = findViewById(R.id.lbl_Description1);
 
@@ -118,6 +124,7 @@ public class ObservationListActivity extends AppCompatActivity {
         lbl_Date.setText(DATE);
         lbl_Parking.setText(PARKING);
         lbl_Length.setText(String.valueOf(LENGTH));
+        lbl_Weather.setText(WEATHER);
         lbl_difficulty.setText(DIFFICULTY);
         lbl_Description.setText(DESCRIPTION);
         getWeatherDetails();
@@ -162,8 +169,27 @@ public class ObservationListActivity extends AppCompatActivity {
                     JSONObject jsonObjectMain = jsonResponse.getJSONObject("main");
                     double temp = jsonObjectMain.getDouble("temp") - 273.15;
 
+                    JSONArray jsonArray = jsonResponse.getJSONArray("weather");
+                    JSONObject jsonObjectWeather = jsonArray.getJSONObject(0);
+                    String description = jsonObjectWeather.getString("description");
+
+                    int humidity = jsonObjectMain.getInt("humidity");
+
+                    JSONObject jsonObjectWind = jsonResponse.getJSONObject("wind");
+                    String wind = jsonObjectWind.getString("speed");
+
+                    float pressure = jsonObjectMain.getInt("pressure");
+
+
+
                     // Set the temperature to lbl_W1
-                    lbl_W1.setText("Temperature: " + df.format(temp) + " °C");
+                    lbl_W1.setText(df.format(temp) + " °C");
+                    lbl_W2.setText(humidity + " %");
+                    lbl_W3.setText(description);
+                    lbl_W4.setText(wind + " m/s");
+                    lbl_W5.setText(pressure + " hPa");
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

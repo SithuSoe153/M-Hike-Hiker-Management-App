@@ -110,6 +110,7 @@ public class DatabaseListActivity extends AppCompatActivity {
                     intent.putExtra(Hike.PARKING, hike.getParking());
                     intent.putExtra(Hike.LENGTH, hike.getLength());
                     intent.putExtra(Hike.DIFFICULTY, hike.getDifficulty());
+                    intent.putExtra(Hike.WEATHER, hike.getWeather());
                     intent.putExtra(Hike.DESCRIPTION, hike.getDescription());
                     startActivity(intent);
                 } else if (id == R.id.btn_Remove) {
@@ -297,6 +298,7 @@ public class DatabaseListActivity extends AppCompatActivity {
         intent.putExtra(Hike.DATE,hike.getDate());
         intent.putExtra(Hike.LOCATION,hike.getLocation());
         intent.putExtra(Hike.DIFFICULTY,hike.getDifficulty());
+        intent.putExtra(Hike.WEATHER,hike.getWeather());
         intent.putExtra(Hike.LENGTH,hike.getLength());
         intent.putExtra(Hike.PARKING,hike.getParking());
         intent.putExtra (Hike.DESCRIPTION,hike.getDescription());

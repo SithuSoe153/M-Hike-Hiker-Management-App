@@ -17,9 +17,9 @@ import com.uog.soemhike.database.Hike;
 
 public class HikeDetailActivity extends AppCompatActivity {
 
-    TextView lbl_Name, lbl_Location, lbl_Date, lbl_Parking, lbl_Length, lbl_Difficulty, lbl_Description;
+    TextView lbl_Name, lbl_Location, lbl_Date, lbl_Parking, lbl_Length, lbl_Difficulty, lbl_Weather, lbl_Description;
     Button btn_Back,btn_Save;
-    String name,location,date,parking,difficulty,description;
+    String name,location,date,parking,difficulty, weather, description;
 
     private DatabaseHelper databaseHelper;
     private Integer id;
@@ -38,6 +38,7 @@ public class HikeDetailActivity extends AppCompatActivity {
         lbl_Parking = findViewById(R.id.txt4);
         lbl_Length = findViewById(R.id.txt5);
         lbl_Difficulty = findViewById(R.id.txt6);
+        lbl_Weather = findViewById(R.id.txt8);
         lbl_Description = findViewById(R.id.txt7);
 
         btn_Back = findViewById(R.id.btn_Back);
@@ -56,6 +57,7 @@ public class HikeDetailActivity extends AppCompatActivity {
             parking = bundle.getString(Hike.PARKING);
             length = Double.parseDouble(bundle.getString(Hike.LENGTH));
             difficulty = bundle.getString(Hike.DIFFICULTY);
+            weather = bundle.getString(Hike.WEATHER);
             description = bundle.getString(Hike.DESCRIPTION);
 
             lbl_Name.setText(name);
@@ -64,10 +66,11 @@ public class HikeDetailActivity extends AppCompatActivity {
             lbl_Parking.setText(parking);
             lbl_Length.setText(length+"");
             lbl_Difficulty.setText(difficulty);
+            lbl_Weather.setText(weather);
             lbl_Description.setText(description);
 
             hike = new Hike(
-                   id,name,location,date,parking,length,difficulty,description
+                   id,name,location,date,parking,length,difficulty, weather,description
             );
 
         }

@@ -40,8 +40,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     " %s TEXT," +
                     " %s INTEGER," +
                     " %s TEXT," +
+                    " %s TEXT," +
                     " %s TEXT)"
-            , TABLE_HIKE, Hike.ID, Hike.NAME, Hike.LOCATION, Hike.DATE, Hike.PARKING, Hike.LENGTH, Hike.DIFFICULTY, Hike.DESCRIPTION);
+            , TABLE_HIKE, Hike.ID, Hike.NAME, Hike.LOCATION, Hike.DATE, Hike.PARKING, Hike.LENGTH, Hike.DIFFICULTY, Hike.WEATHER, Hike.DESCRIPTION);
 
 
     private static final String CREATE_OBSERVATION_TABLE = String.format(
@@ -99,6 +100,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         rowValues.put(Hike.PARKING, hike.getParking());
         rowValues.put(Hike.LENGTH, hike.getLength());
         rowValues.put(Hike.DIFFICULTY, hike.getDifficulty());
+        rowValues.put(Hike.WEATHER, hike.getWeather());
         rowValues.put(Hike.DESCRIPTION, hike.getDescription());
 
         result =database.insertOrThrow(TABLE_HIKE, null, rowValues);
@@ -132,6 +134,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         rowValues.put(Hike.PARKING, hike.getParking());
         rowValues.put(Hike.LENGTH, hike.getLength());
         rowValues.put(Hike.DIFFICULTY, hike.getDifficulty());
+        rowValues.put(Hike.WEATHER, hike.getWeather());
         rowValues.put(Hike.DESCRIPTION, hike.getDescription());
 
         Log.i("test", "updateHike");
@@ -246,7 +249,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     cursor.getString(4),
                     cursor.getDouble(5),
                     cursor.getString(6),
-                    cursor.getString(7)
+                    cursor.getString(7),
+                    cursor.getString(8)
             );
             results.add(hike);
             cursor.moveToNext();

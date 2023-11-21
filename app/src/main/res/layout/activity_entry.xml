@@ -178,6 +178,17 @@
         android:id="@+id/spn_Difficulty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+<TextView
+        android:id="@+id/textView8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Name"
+        android:text="Weather Condition" />
+
+    <Spinner
+        android:id="@+id/spn_Weather"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/lbl_h6"

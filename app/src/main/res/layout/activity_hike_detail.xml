@@ -116,13 +116,32 @@
         app:layout_constraintTop_toBottomOf="@+id/lbl6" />
 
     <TextView
+        android:id="@+id/lbl8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Weather Condition"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt6" />
+
+    <TextView
+        android:id="@+id/txt8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="as"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl8" />
+
+
+    <TextView
         android:id="@+id/lbl7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/lbl_Description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt6" />
+        app:layout_constraintTop_toBottomOf="@+id/txt8" />
 
     <TextView
         android:id="@+id/txt7"
