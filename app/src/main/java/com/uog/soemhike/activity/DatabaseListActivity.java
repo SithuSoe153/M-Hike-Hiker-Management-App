@@ -51,7 +51,7 @@ public class DatabaseListActivity extends AppCompatActivity {
     FloatingActionButton fab_btn, fab_btn1;
     private Spinner spn_delete;
 
-    private String[] deleteNames = {"Delete"};
+    private String[] deleteNames = {"Delete", "Confirm Delete"};
     private Integer deleteIndex = 0;
     String dde;
 
@@ -88,6 +88,28 @@ public class DatabaseListActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 dde = deleteNames[i];
                 Log.i("ddd", "good Del");
+
+
+                if ("Confirm Delete".equals(dde)) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(DatabaseListActivity.this);
+                    builder.setTitle("Delete All Data")
+                            .setMessage("Delete all data from Hike Database")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // Check if "Confirm Delete" is selected
+                                    DatabaseHelper dbHelper = new DatabaseHelper(getBaseContext());
+                                    dbHelper.deleteAllHikes();
+
+                                    Intent intent = new Intent(getBaseContext(), DatabaseListActivity.class);
+                                    startActivity(intent);
+
+                                    dialog.dismiss(); // Close the dialog
+                                }
+                            })
+                            .show();
+                }
+
+
             }
 
             @Override

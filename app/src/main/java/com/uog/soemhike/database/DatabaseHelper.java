@@ -147,6 +147,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public void deleteAllHikes() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_HIKE, null, null);
+        db.close();
+    }
+
     public long update_Observation(Observation observation){
         long result =0;
         ContentValues rowValues =new ContentValues();
