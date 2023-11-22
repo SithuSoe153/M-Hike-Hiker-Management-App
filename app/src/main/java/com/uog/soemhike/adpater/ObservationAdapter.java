@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.uog.soemhike.R;
 import com.uog.soemhike.UpdateObservationActivity;
 import com.uog.soemhike.database.DatabaseHelper;
+import com.uog.soemhike.database.Hike;
 import com.uog.soemhike.database.Observation;
 import com.uog.soemhike.ObservationImageActivity;
 
@@ -35,6 +37,8 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
     DatabaseHelper databaseHelper;
 
     public String avatarFilePath;
+
+    String hike_Name,hike_Location,hike_Date, hike_Parking, hike_Length, hike_Weather,hike_Difficulty,hike_Description;
 
 
     public ObservationAdapter(Context context, List<Observation> arrayList) {
@@ -77,6 +81,7 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
 
         holder.txt_Otitle.setText(o_Record.getTitle());
         holder.txt_Year.setText(o_Record.getYear());
+        holder.txt_CurrentTime.setText(o_Record.getCurrentTime());
 
 
         holder.btn_OEdit.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +112,8 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
 
 
 //        Log.i("tt", o_Record.getTitle());
+
+
 
     }
 
@@ -151,12 +158,24 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
     }
 
     private void update_Observation(Observation o){
+
         Intent intent = new Intent(context, UpdateObservationActivity.class);
         intent.putExtra(Observation.O_ID, o.getId());
         intent.putExtra(Observation.O_TITLE, o.getTitle());
         intent.putExtra(Observation.O_YEAR, o.getYear());
+        intent.putExtra(Observation.O_CURRENT_TIME, o.getCurrentTime());
         intent.putExtra(Observation.O_HIKEID, o.getUser_id());
         intent.putExtra(Observation.AVATAR_FILE_PATH, o.getAvatarFilePath());
+
+        intent.putExtra(Hike.NAME, hike_Name);
+        intent.putExtra(Hike.LOCATION, hike_Location);
+        intent.putExtra(Hike.DATE, hike_Date);
+        intent.putExtra(Hike.PARKING, hike_Parking);
+        intent.putExtra(Hike.LENGTH, hike_Length);
+        intent.putExtra(Hike.WEATHER, hike_Weather);
+        intent.putExtra(Hike.DIFFICULTY, hike_Difficulty);
+        intent.putExtra(Hike.DESCRIPTION, hike_Description);
+
         context.startActivity(intent);
 
     }
@@ -165,7 +184,7 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
 
         ImageView iv_Oimage;
         TextView txt_Otitle;
-        TextView txt_Year;
+        TextView txt_Year, txt_CurrentTime;
         ConstraintLayout l_oitem;
         ImageButton btn_OEdit, btn_ODelete;
 
@@ -176,6 +195,7 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
             iv_Oimage = itemView.findViewById(R.id.iv_Oimage);
             txt_Otitle = itemView.findViewById(R.id.txt_Otitle);
             txt_Year = itemView.findViewById(R.id.txt_Year);
+            txt_CurrentTime = itemView.findViewById(R.id.txt_CurrentTime);
             l_oitem = itemView.findViewById(R.id.l_oitem);
             btn_OEdit = itemView.findViewById(R.id.btn_OEdit);
             btn_ODelete = itemView.findViewById(R.id.btn_ODelete);

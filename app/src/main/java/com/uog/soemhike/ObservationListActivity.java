@@ -32,6 +32,7 @@ import org.json.JSONObject;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ObservationListActivity extends AppCompatActivity {
 
@@ -50,6 +51,7 @@ public class ObservationListActivity extends AppCompatActivity {
     private final String url = "http://api.openweathermap.org/data/2.5/weather";
     private final String appid = "1aecce68e2aa97be4985f8d8cdc072c5";
     DecimalFormat df = new DecimalFormat("#.##");
+    private String LOCATION;
 
 
     @Override
@@ -66,7 +68,7 @@ public class ObservationListActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         hike_Id = bundle.getInt(Observation.O_HIKEID);
         String Name = bundle.getString(Hike.NAME);
-        String LOCATION = bundle.getString(Hike.LOCATION);
+        LOCATION = bundle.getString(Hike.LOCATION);
         String DATE = bundle.getString(Hike.DATE);
         String PARKING = bundle.getString(Hike.PARKING);
         Double LENGTH = bundle.getDouble(Hike.LENGTH);
@@ -74,8 +76,8 @@ public class ObservationListActivity extends AppCompatActivity {
         String DIFFICULTY = bundle.getString(Hike.DIFFICULTY);
         String DESCRIPTION = bundle.getString(Hike.DESCRIPTION);
 
-        Log.i("test123", Name);
 
+        Log.i("bb5", LOCATION);
 
 //       New
 
@@ -93,6 +95,15 @@ public class ObservationListActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(), AddObservationActivity.class);
                 intent.putExtra(Observation.O_HIKEID, hike_Id);
+                intent.putExtra(Hike.NAME, Name);
+                intent.putExtra(Hike.LOCATION, LOCATION);
+                intent.putExtra(Hike.DATE, DATE);
+                intent.putExtra(Hike.PARKING, PARKING);
+                intent.putExtra(Hike.LENGTH, LENGTH);
+                intent.putExtra(Hike.WEATHER, WEATHER);
+                intent.putExtra(Hike.DIFFICULTY, DIFFICULTY);
+                intent.putExtra(Hike.DESCRIPTION, DESCRIPTION);
+
                 startActivity(intent);
 
             }
@@ -159,7 +170,7 @@ public class ObservationListActivity extends AppCompatActivity {
 //
 
     private void getWeatherDetails() {
-        String tempUrl = url + "?q=" + lbl_Location.getText().toString().trim() + "&appid=" + appid;
+        String tempUrl = url + "?q=" + LOCATION + "&appid=" + appid;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, tempUrl, new Response.Listener<String>() {
             @Override

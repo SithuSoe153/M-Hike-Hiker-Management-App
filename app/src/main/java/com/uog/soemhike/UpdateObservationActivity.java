@@ -20,11 +20,16 @@ import com.uog.soemhike.database.Observation;
 public class UpdateObservationActivity extends AppCompatActivity {
 
     EditText txt_Title, txt_Year;
+    TextView txt_Date;
+
     Button btn_UpdateQualification;
     DatabaseHelper databaseHelper;
     ImageView ivUserUpdate;
     int o_id;
     int o_hid;
+
+    String hike_Name,hike_Location,hike_Date, hike_Parking, hike_Length, hike_Weather,hike_Difficulty,hike_Description;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,7 @@ public class UpdateObservationActivity extends AppCompatActivity {
 
         txt_Title = findViewById(R.id.txt_Title);
         txt_Year = findViewById(R.id.txt_Year);
+        txt_Date = findViewById(R.id.txt_Date);
         btn_UpdateQualification = findViewById(R.id.btn_UpdateQualification);
         databaseHelper = new DatabaseHelper(this);
         ivUserUpdate = findViewById(R.id.ivUserUpdate);
@@ -57,8 +63,21 @@ public class UpdateObservationActivity extends AppCompatActivity {
 
         txt_Title.setText(bundle.getString(Observation.O_TITLE));
         txt_Year.setText(bundle.getString(Observation.O_YEAR));
+        txt_Date.setText(bundle.getString(Observation.O_CURRENT_TIME));
+//        Log.i("bb23", bundle.getString(Observation.O_CURRENT_TIME));
         o_id = bundle.getInt(Observation.O_ID);
         o_hid = bundle.getInt(Observation.O_HIKEID);
+
+        hike_Name = bundle.getString(Hike.NAME);
+        hike_Location = bundle.getString(Hike.LOCATION);
+        hike_Date = bundle.getString(Hike.DATE);
+        hike_Parking = bundle.getString(Hike.PARKING);
+        hike_Length = bundle.getString(Hike.LENGTH);
+        hike_Weather = bundle.getString(Hike.WEATHER);
+        hike_Difficulty = bundle.getString(Hike.DIFFICULTY);
+        hike_Description = bundle.getString(Hike.DESCRIPTION);
+
+//        Log.i("bb123", hike_Name);
 
         btn_UpdateQualification.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +102,16 @@ public class UpdateObservationActivity extends AppCompatActivity {
 
         Intent intent = new Intent(UpdateObservationActivity.this, ObservationListActivity.class);
         intent.putExtra(Observation.O_HIKEID, o_hid);
+
+        intent.putExtra(Hike.NAME, hike_Name);
+        intent.putExtra(Hike.LOCATION, hike_Location);
+        intent.putExtra(Hike.DATE, hike_Date);
+        intent.putExtra(Hike.PARKING, hike_Parking);
+        intent.putExtra(Hike.LENGTH, hike_Length);
+        intent.putExtra(Hike.WEATHER, hike_Weather);
+        intent.putExtra(Hike.DIFFICULTY, hike_Difficulty);
+        intent.putExtra(Hike.DESCRIPTION, hike_Description);
+
         startActivity(intent);
 
     }

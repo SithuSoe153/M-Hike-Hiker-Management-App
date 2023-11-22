@@ -23,11 +23,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.uog.soemhike.activity.DatabaseListActivity;
 import com.uog.soemhike.database.DatabaseHelper;
+import com.uog.soemhike.database.Hike;
 import com.uog.soemhike.database.Observation;
 import com.uog.soemhike.databinding.ActivityAddObservationBinding;
 
@@ -37,6 +39,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -51,7 +54,7 @@ public class AddObservationActivity extends AppCompatActivity {
 //
 
     EditText txt_title;
-    EditText txt_year;
+    EditText txt_year, txt_CurrentTime;
     Button btn_SaveQualification;
     DatabaseHelper databaseHelper;
 
@@ -62,6 +65,7 @@ public class AddObservationActivity extends AppCompatActivity {
     Button btnTakePicture;
 
     int hike_Id = 0;
+    String hike_Name,hike_Location,hike_Date, hike_Parking, hike_Length, hike_Weather,hike_Difficulty,hike_Description;
 
 
 
@@ -85,6 +89,8 @@ public class AddObservationActivity extends AppCompatActivity {
 
         txt_title = findViewById(R.id.txt_Title);
         txt_year = findViewById(R.id.txt_Year);
+        txt_CurrentTime = findViewById(R.id.txt_CurrentTime);
+        txt_CurrentTime.setText(getCurrentTime());
 
         btn_SaveQualification = findViewById(R.id.btn_SaveQualification);
 
@@ -97,6 +103,14 @@ public class AddObservationActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         hike_Id = bundle.getInt(Observation.O_HIKEID);
+        hike_Name = bundle.getString(Hike.NAME);
+        hike_Location = bundle.getString(Hike.LOCATION);
+        hike_Date = bundle.getString(Hike.DATE);
+        hike_Parking = bundle.getString(Hike.PARKING);
+        hike_Length = bundle.getString(Hike.LENGTH);
+        hike_Weather = bundle.getString(Hike.WEATHER);
+        hike_Difficulty = bundle.getString(Hike.DIFFICULTY);
+        hike_Description = bundle.getString(Hike.DESCRIPTION);
 
         Log.i("key111", String.valueOf(hike_Id));
         btn_SaveQualification.setOnClickListener(new View.OnClickListener() {
@@ -229,16 +243,22 @@ public class AddObservationActivity extends AppCompatActivity {
 
 
 
-
+    private String getCurrentTime() {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        return dateFormat.format(calendar.getTime());
+    }
 
     //    Save
     private void saveQualification() {
         String qTitle = txt_title.getText().toString();
         String qYear = txt_year.getText().toString();
+        String currentTime = getCurrentTime();
+        Log.i("time", currentTime);
 //        imagePath;
 
 
-        Observation observation = new Observation(qTitle,qYear , imagePath, hike_Id);
+        Observation observation = new Observation(qTitle,qYear, currentTime, imagePath, hike_Id);
 
         long qid = databaseHelper.addObservation(observation);
 
@@ -250,6 +270,14 @@ public class AddObservationActivity extends AppCompatActivity {
                         // User clicked OK button, navigate to the new activity
                         Intent intent = new Intent(getBaseContext(), ObservationListActivity.class);
                         intent.putExtra(Observation.O_HIKEID, hike_Id);
+                        intent.putExtra(Hike.NAME, hike_Name);
+                        intent.putExtra(Hike.LOCATION, hike_Location);
+                        intent.putExtra(Hike.DATE, hike_Date);
+                        intent.putExtra(Hike.PARKING, hike_Parking);
+                        intent.putExtra(Hike.LENGTH, hike_Length);
+                        intent.putExtra(Hike.WEATHER, hike_Weather);
+                        intent.putExtra(Hike.DIFFICULTY, hike_Difficulty);
+                        intent.putExtra(Hike.DESCRIPTION, hike_Description);
                         startActivity(intent);
                     }
                 })

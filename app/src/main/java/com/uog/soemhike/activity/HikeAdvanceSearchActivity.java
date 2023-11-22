@@ -36,6 +36,9 @@ public class HikeAdvanceSearchActivity extends AppCompatActivity {
 
     String location;
 
+    private String[] spn_Location_data = {"Select a location", "Scotland", "Wales", "England", "Ireland"};
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,23 +51,23 @@ public class HikeAdvanceSearchActivity extends AppCompatActivity {
         btnAdvdate=findViewById(R.id.btnAdvShowDateTime);
         btnAdvSearch=findViewById(R.id.btn_AdvSearch);
 
-//        ArrayAdapter<String> adapterLocation = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spn_Location_data);
-//        adapterLocation.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spnAdvLocation.setAdapter(adapterLocation);
-//        spnAdvLocation.setSelection(0);
-//        spnAdvLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//
-//                location=spn_Location_data[i];
-//
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
+        ArrayAdapter<String> adapterLocation = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spn_Location_data);
+        adapterLocation.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnAdvLocation.setAdapter(adapterLocation);
+        spnAdvLocation.setSelection(0);
+        spnAdvLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                location=spn_Location_data[i];
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         btnAdvdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,6 +93,7 @@ public class HikeAdvanceSearchActivity extends AppCompatActivity {
                         txtAdvname.requestFocus();
                         return;
                     }
+
                     if (location==null || location.isEmpty()) {
                         new AlertDialog.Builder(getBaseContext()).setTitle("Error").setMessage("Please Select the Location of Hike").show();
                         return;
@@ -106,7 +110,7 @@ public class HikeAdvanceSearchActivity extends AppCompatActivity {
 
                 Intent intent=new Intent();
                 intent.putExtra(Hike.NAME,name.trim());
-                intent.putExtra(Hike.LOCATION,location);
+//                intent.putExtra(Hike.LOCATION,location);
                 intent.putExtra(Hike.DATE,date);
                 intent.putExtra(Hike.LENGTH,length);
                 setResult(RESULT_OK,intent);

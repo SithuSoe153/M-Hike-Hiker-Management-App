@@ -15,9 +15,12 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -46,6 +49,14 @@ public class DatabaseListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     EditText txtsearch;
     FloatingActionButton fab_btn, fab_btn1;
+    private Spinner spn_delete;
+
+    private String[] deleteNames = {"Delete"};
+    private Integer deleteIndex = 0;
+    String dde;
+
+
+
 
     TextView tv_press;
 
@@ -65,8 +76,25 @@ public class DatabaseListActivity extends AppCompatActivity {
         databaseHelper=new DatabaseHelper(getBaseContext());
         hikeAdapter=new HikeAdapter(hikeList);
         tv_press = findViewById(R.id.tv_press);
+        spn_delete = findViewById(R.id.spn_delete);
 
 
+        ArrayAdapter<String> dd = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, deleteNames);
+        dd.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spn_delete.setAdapter(dd);
+        spn_delete.setSelection(deleteIndex);
+        spn_delete.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                dde = deleteNames[i];
+                Log.i("ddd", "good Del");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
 
         try {

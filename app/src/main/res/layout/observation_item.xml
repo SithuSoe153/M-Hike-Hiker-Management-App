@@ -9,36 +9,50 @@
     android:layout_marginTop="50dp">
 
 
-
     <ImageView
         android:id="@+id/iv_Oimage"
-        android:layout_width="200dp"
+        android:layout_width="150dp"
         android:layout_height="300dp"
-        android:rotation="90"
+        android:rotation="0"
         android:src="@drawable/default_avatar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/txt_Otitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Title"
 
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        android:text="Title"
         android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_Oimage"
         app:layout_constraintTop_toTopOf="parent" />
- <TextView
+
+    <TextView
         android:id="@+id/txt_Year"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Year"
 
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:text="Year"
         android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_Oimage"
         app:layout_constraintTop_toBottomOf="@+id/txt_Otitle" />
+
+    <TextView
+        android:id="@+id/txt_CurrentTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="20dp"
+        android:text="Current Time"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/iv_Oimage"
+        app:layout_constraintTop_toBottomOf="@+id/txt_Year" />
 
     <ImageButton
         android:id="@+id/btn_OEdit"
@@ -57,9 +71,6 @@
         android:src="@drawable/baseline_delete_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

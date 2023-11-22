@@ -51,12 +51,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     " %s TEXT," +
                     " %s TEXT," +
                     " %s TEXT," +
+                    " %s TEXT," +
                     " %s INTEGER," +
                     " FOREIGN KEY (%s)" +
                     " REFERENCES %s(%s)" +
                     " ON DELETE CASCADE" +
                     ")"
-            , TABLE_OBSERVATION, Observation.O_ID, Observation.O_TITLE, Observation.O_YEAR,  Observation.AVATAR_FILE_PATH, Observation.O_HIKEID, Observation.O_HIKEID, TABLE_HIKE, Hike.ID);
+            , TABLE_OBSERVATION, Observation.O_ID, Observation.O_TITLE, Observation.O_YEAR, Observation.O_CURRENT_TIME,  Observation.AVATAR_FILE_PATH, Observation.O_HIKEID, Observation.O_HIKEID, TABLE_HIKE, Hike.ID);
 
 
     public DatabaseHelper(Context context){
@@ -115,6 +116,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues rowValues =new ContentValues();
         rowValues.put(Observation.O_TITLE, observation.getTitle());
         rowValues.put(Observation.O_YEAR, observation.getYear());
+        rowValues.put(Observation.O_CURRENT_TIME, observation.getCurrentTime());
         rowValues.put(Observation.AVATAR_FILE_PATH, observation.avatarFilePath);
         rowValues.put(Observation.O_HIKEID, observation.getUser_id());
 
@@ -272,7 +274,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     cursor.getString(1),
                     cursor.getString(2),
                     cursor.getString(3),
-                    cursor.getInt(4)
+                    cursor.getString(4),
+                    cursor.getInt(5)
 
             );
 

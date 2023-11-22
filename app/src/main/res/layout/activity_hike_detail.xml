@@ -4,9 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HikeDetailActivity">
+    tools:context=".HikeDetailActivity"
+    android:layout_margin="20dp">
 
     <TextView
+        android:layout_marginTop="12dp"
+
         android:id="@+id/lbl1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,6 +19,8 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:layout_marginTop="5dp"
+        android:textSize="20sp"
         android:id="@+id/txt1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,6 +31,8 @@
 
 
     <TextView
+        android:layout_marginTop="12dp"
+
         android:id="@+id/lbl2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,6 +42,9 @@
         app:layout_constraintTop_toBottomOf="@+id/txt1" />
 
     <TextView
+        android:layout_marginTop="5dp"
+        android:textSize="20sp"
+
         android:id="@+id/txt2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,6 +54,8 @@
         app:layout_constraintTop_toBottomOf="@+id/lbl2" />
 
     <TextView
+        android:layout_marginTop="12dp"
+
         android:id="@+id/lbl3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,6 +65,9 @@
         app:layout_constraintTop_toBottomOf="@+id/txt2" />
 
     <TextView
+        android:layout_marginTop="5dp"
+        android:textSize="20sp"
+
         android:id="@+id/txt3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -62,6 +77,8 @@
         app:layout_constraintTop_toBottomOf="@+id/lbl3" />
 
     <TextView
+        android:layout_marginTop="12dp"
+
         android:id="@+id/lbl4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -71,6 +88,9 @@
         app:layout_constraintTop_toBottomOf="@+id/txt3" />
 
     <TextView
+        android:layout_marginTop="5dp"
+        android:textSize="20sp"
+
         android:id="@+id/txt4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -80,6 +100,8 @@
         app:layout_constraintTop_toBottomOf="@+id/lbl4" />
 
     <TextView
+        android:layout_marginTop="12dp"
+
         android:id="@+id/lbl5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -89,6 +111,9 @@
         app:layout_constraintTop_toBottomOf="@+id/txt4" />
 
     <TextView
+        android:layout_marginTop="5dp"
+        android:textSize="20sp"
+
         android:id="@+id/txt5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -98,6 +123,8 @@
         app:layout_constraintTop_toBottomOf="@+id/lbl5" />
 
     <TextView
+        android:layout_marginTop="12dp"
+
         android:id="@+id/lbl6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -107,6 +134,9 @@
         app:layout_constraintTop_toBottomOf="@+id/txt5" />
 
     <TextView
+        android:layout_marginTop="5dp"
+        android:textSize="20sp"
+
         android:id="@+id/txt6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -116,6 +146,8 @@
         app:layout_constraintTop_toBottomOf="@+id/lbl6" />
 
     <TextView
+        android:layout_marginTop="12dp"
+
         android:id="@+id/lbl8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -125,6 +157,9 @@
         app:layout_constraintTop_toBottomOf="@+id/txt6" />
 
     <TextView
+        android:layout_marginTop="5dp"
+        android:textSize="20sp"
+
         android:id="@+id/txt8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -135,6 +170,8 @@
 
 
     <TextView
+        android:layout_marginTop="12dp"
+
         android:id="@+id/lbl7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -144,6 +181,9 @@
         app:layout_constraintTop_toBottomOf="@+id/txt8" />
 
     <TextView
+        android:layout_marginTop="5dp"
+        android:textSize="20sp"
+
         android:id="@+id/txt7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -153,6 +193,8 @@
         app:layout_constraintTop_toBottomOf="@+id/lbl7" />
 
     <LinearLayout
+        android:layout_marginTop="20dp"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
